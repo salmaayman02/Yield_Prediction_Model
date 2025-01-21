@@ -63,9 +63,6 @@ if st.button("Predict Yield"):
         # Combine encoded categorical and scaled numerical features
         input_array = np.hstack(([[area_encoded, item_encoded]], scaled_numerical_features))
 
-        # Make a prediction (scaled output)
-        scaled_prediction = final_model.predict(input_array, verbose=0)
-        
 
         # # Reverse scaling for target variable
         predicted_yield = target_scaler.inverse_transform(scaled_prediction)[0][0]
