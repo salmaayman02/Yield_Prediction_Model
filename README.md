@@ -1,89 +1,102 @@
-# Yield Prediction System
+# Yield Prediction App
 
-## Overview
-The Yield Prediction System is a comprehensive project that predicts agricultural yield using a trained neural network model. This system integrates advanced machine learning techniques, data preprocessing, model evaluation, visualization, and a user-friendly GUI for easy interaction.
+This project is a web-based application for predicting agricultural yields using machine learning. It allows users to input specific features about a region and crop, such as average rainfall, pesticide usage, and temperature, to estimate the yield.
 
 ## Features
-- **Data Preprocessing**:
-  - Label Encoding for categorical features.
-  - Standardization for numerical features.
-  - Splitting dataset into training, validation, and testing sets.
-- **Dynamic Dropout Evaluation**: Tests multiple dropout rates to prevent overfitting and optimize performance.
-- **Neural Network**:
-  - Feedforward architecture with two hidden layers.
-  - Adjustable dropout layers.
-- **Performance Metrics**: Mean Squared Error (MSE) and Mean Absolute Error (MAE) for evaluation.
-- **Visualization**:
-  - True vs Predicted scatter plot.
-  - Residuals plot.
-  - Training and validation loss curve.
-  - Feature importance using permutation importance.
-- **Graphical User Interface (GUI)**: Developed using Tkinter, allowing users to input features and receive predictions.
+
+- **User-Friendly Interface**: Built with Streamlit for an intuitive and interactive user experience.
+- **Accurate Predictions**: Leverages a pre-trained neural network model to predict crop yield.
+- **Dynamic Inputs**: Allows users to select regions and crops from preloaded datasets.
+- **Scalable Architecture**: Utilizes scalable machine learning pipelines for preprocessing and predictions.
+
+## How It Works
+
+1. **Input Fields**:
+   - **Area**: Select the region from a predefined list.
+   - **Item**: Choose the crop or item to predict yield for.
+   - **Average Rainfall (mm/year)**: Specify the average rainfall.
+   - **Pesticides (tonnes)**: Enter the amount of pesticides used.
+   - **Average Temperature (°C)**: Provide the average temperature for the area.
+   - **Year**: Specify the year for prediction.
+
+2. **Preprocessing**:
+   - Encodes categorical inputs using `LabelEncoder`.
+   - Scales numerical features using `StandardScaler`.
+
+3. **Prediction**:
+   - Combines encoded and scaled features into a single input array.
+   - Feeds the array into a pre-trained neural network model (`final_model.h5`).
+   - The output is scaled back to human-readable form using a saved scaler.
+
+4. **Results**:
+   - Displays the predicted yield in hectograms per hectare (hg/ha).
+
+## Prerequisites
+
+- Python 3.7+
+- Libraries:
+  - `streamlit`
+  - `numpy`
+  - `pandas`
+  - `scikit-learn`
+  - `tensorflow`
+  - `pickle`
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/yield-prediction-app.git
+   cd yield-prediction-app
+   ```
+
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Place the required model and preprocessing files in the root directory:
+   - `final_model.h5`
+   - `label_encoder_area.pkl`
+   - `label_encoder_item.pkl`
+   - `scaler_features.pkl`
+   - `scaler_target.pkl`
+   - `yield_df.csv`
+
+## Usage
+
+1. Run the application:
+   ```bash
+   streamlit run app.py
+   ```
+
+2. Open the URL displayed in the terminal to access the app.
+
+3. Enter the required details and click **Predict Yield** to get the results.
 
 ## Dataset
-The dataset includes agricultural and environmental data with the following key columns:
-- `Area`: Represents the geographical region (categorical).
-- `Item`: Represents the crop or agricultural product (categorical).
-- `average_rain_fall_mm_per_year`: Average rainfall in millimeters per year (numerical).
-- `pesticides_tonnes`: Usage of pesticides in tonnes (numerical).
-- `avg_temp`: Average temperature (numerical).
-- `Year`: Year of observation (numerical).
 
-### Preprocessing Steps
-1. **Label Encoding**: Converts categorical columns (`Area` and `Item`) into numerical representations using `LabelEncoder`.
-2. **Feature Scaling**: Standardizes numerical columns to ensure uniform scaling.
-3. **Data Splitting**: Divides the dataset into training, validation, and test sets with an 80-10-10 ratio.
+The application uses a dataset (`yield_df.csv`) containing information about regions, crops, and related features.
 
-## Neural Network Model
-- **Architecture**:
-  - Input Layer: Takes standardized features.
-  - Hidden Layers: Two layers with 128 and 64 neurons, ReLU activation.
-  - Dropout Layers: Dynamically adjusted rates to mitigate overfitting.
-  - Output Layer: Single neuron for yield prediction.
-- **Hyperparameters**:
-  - Optimizer: Adam with a learning rate of 0.001.
-  - Loss Function: Mean Squared Error (MSE).
-  - Metrics: Mean Absolute Error (MAE).
-  - Epochs: 50.
-  - Batch Size: 32.
+## File Structure
 
-### Results
-- Best Dropout Rate: `0.1`
-- Performance Metrics:
-  - Mean Squared Error (MSE): 0.1972
-  - Mean Absolute Error (MAE): 0.2957
-
-## Visualizations
-1. **True vs Predicted Values**: Scatter plot comparing actual and predicted yields.
-2. **Residuals Plot**: Residuals against predicted values to evaluate prediction quality.
-3. **Learning Curve**: Training and validation loss over epochs.
-4. **Feature Importance**: Permutation importance analysis to highlight impactful features.
-
-## Graphical User Interface (GUI)
-A Tkinter-based GUI application for user-friendly predictions:
-- **Input Fields**: Users can input values for features like `Area`, `Item`, `average_rain_fall_mm_per_year`, etc.
-- **Output**: Displays raw input data and predicted yield.
-- **Validation**: Ensures valid inputs for categorical and numerical features.
-
-### Usage Instructions
-1. Run the script to launch the GUI.
-2. Enter feature values in the input fields.
-3. Click "Predict Yield" to see the prediction result.
-
-## How to Run the Project
-1. Clone the repository and install dependencies:
-   ```bash
-   pip install tensorflow scikit-learn pandas numpy matplotlib seaborn
-   ```
-2. Prepare your dataset with the structure described above and save it as `yield_df.csv`.
-3. Train the model by running the training script.
-4. Use the Tkinter GUI script to make predictions.
+- `app.py`: Main Streamlit application file.
+- `final_model.h5`: Pre-trained model for yield prediction.
+- `*.pkl`: Preprocessing files for encoding and scaling.
+- `yield_df.csv`: Dataset used for extracting area and crop options.
 
 ## Future Improvements
-- Add support for additional features like soil quality, humidity, and other environmental factors.
-- Implement advanced models like CNNs or LSTMs.
-- Perform hyperparameter optimization using Grid Search or Bayesian methods.
 
-## Contact
-For questions, feedback, or collaborations, please reach out at salmaayman.mokhtar@gmail.com.
+- Support for additional crops and regions.
+- Integration of real-time weather data.
+- Enhanced visualization for input data and predictions.
 
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Acknowledgments
+
+- TensorFlow for model development.
+- Streamlit for creating the interactive web application.
+- Contributors to open-source libraries used in the project.
